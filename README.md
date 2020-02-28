@@ -10,7 +10,7 @@ The following are the modules in MystoreApp
 
 •	inventory – services to handle product inventory (AddProduct, UpdateProduct, DeleteProduct, & List Product)
 
-•	order-management – service to handle order management (AddOrder, UpdateOrder, DeleteOrder, ListOrder, Upload Order from Excel)
+•	order-management – services to handle order management (AddOrder, UpdateOrder, DeleteOrder, ListOrder, Upload Order from Excel)
 
-•	mystore war – web application 
+•	mystore web application 
 
