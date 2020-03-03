@@ -35,8 +35,7 @@ public class UserController extends HttpServlet {
        
     private AccountService accountService;
    
-    public UserController() {
-       super();
+    public UserController() {       
        accountService = new AccountServiceImpl();        
     }
 

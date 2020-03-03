@@ -43,8 +43,7 @@ public class OrderController extends HttpServlet {
 
 	private ProductService productService;
 	
-	public OrderController() {
-		super();
+	public OrderController() {		
 		orderService = new OrderServiceImpl();
 		productService = new ProductServiceImpl();
 	}

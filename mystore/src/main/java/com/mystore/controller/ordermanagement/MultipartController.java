@@ -41,8 +41,7 @@ public class MultipartController extends HttpServlet {
 
 	private OrderService orderService;
 	
-	public MultipartController() {
-		super();
+	public MultipartController() {		
 		orderService = new OrderServiceImpl();
 	}
 

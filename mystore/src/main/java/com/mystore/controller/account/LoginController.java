@@ -34,8 +34,7 @@ public class LoginController extends HttpServlet {
 
 	private AccountService accountService;
 	
-	public LoginController() {
-		super();
+	public LoginController() {		
 		accountService = new AccountServiceImpl();
 	}
 

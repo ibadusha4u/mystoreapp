@@ -16,7 +16,6 @@ import com.core.exception.BusinessException;
 import com.inventory.model.Product;
 import com.inventory.service.ProductService;
 import com.inventory.service.ProductServiceImpl;
-import com.mystore.controller.account.LoginController;
 
 /**
  * ProductController
@@ -37,8 +36,7 @@ public class ProductController extends HttpServlet {
 	private ProductService productService;
 
 	
-	public ProductController() {
-		super();
+	public ProductController() {		
 		productService = new ProductServiceImpl();
 	}
 
