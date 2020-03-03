@@ -7,12 +7,16 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.inventory.model.Product;
+import org.apache.log4j.Logger;
+
 import com.core.dao.AbstractDAO;
 import com.core.exception.BusinessException;
 import com.core.util.ConnectionManager;
+import com.inventory.model.Product;
 
 public class ProductDAO implements AbstractDAO<Product> {
+	
+	final static Logger logger = Logger.getLogger(ProductDAO.class);
 
 	private static Connection currentCon = null;
 	private static ResultSet rs = null;
@@ -33,9 +37,9 @@ public class ProductDAO implements AbstractDAO<Product> {
 			ps.setDouble(3, unitPrice);
 			ps.executeUpdate();
 
-			System.out.println("Your product name is " + name);
-			System.out.println("Your product quantity is " + quantity);
-			System.out.println("Your product price is " + unitPrice);
+			logger.info("Your product name is " + name);
+			logger.info("Your product quantity is " + quantity);
+			logger.info("Your product price is " + unitPrice);
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			throw new BusinessException(ex.getMessage(), ex);

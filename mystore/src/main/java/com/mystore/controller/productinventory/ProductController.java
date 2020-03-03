@@ -10,10 +10,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.log4j.Logger;
+
 import com.core.exception.BusinessException;
 import com.inventory.model.Product;
 import com.inventory.service.ProductService;
 import com.inventory.service.ProductServiceImpl;
+import com.mystore.controller.account.LoginController;
 
 /**
  * ProductController
@@ -22,6 +25,8 @@ import com.inventory.service.ProductServiceImpl;
 public class ProductController extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
+	
+	final static Logger logger = Logger.getLogger(ProductController.class);
 	
 	private static String VIEW = "/product/viewProduct.jsp";
 	private static String DELETE = "/product/deleteProduct.jsp";
@@ -53,14 +58,14 @@ public class ProductController extends HttpServlet {
 				forward = UPDATE;
 				int sku = Integer.parseInt(request.getParameter("sku"));
 				Product product = productService.getProductByProdid(sku);
-				System.out.println("updateProduct " + product.getName());
+				logger.info("updateProduct " + product.getName());
 				request.setAttribute("product", product);
 	
 			} else if (action.equalsIgnoreCase("deleteProduct")) {
 				forward = DELETE;
 				int sku = Integer.parseInt(request.getParameter("sku"));
 				Product product = productService.getProductByProdid(sku);
-				System.out.println("deleteProduct " + product.getName());
+				logger.info("deleteProduct " + product.getName());
 				request.setAttribute("product", product);
 			}
 		} catch (BusinessException e) {			

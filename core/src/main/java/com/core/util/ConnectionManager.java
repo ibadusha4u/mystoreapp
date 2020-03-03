@@ -4,9 +4,14 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
+import org.apache.log4j.Logger;
+
+
 public class ConnectionManager {
 	
 	private static final String DB_DRIVER = "com.mysql.jdbc.Driver";
+	
+	final static Logger logger = Logger.getLogger(ConnectionManager.class);
 	
 	private static Connection con;
 	
@@ -15,12 +20,12 @@ public class ConnectionManager {
 			Class.forName(DB_DRIVER);
 			try {
 				con = DriverManager.getConnection(dbUrl, dbusername, dbPassword);
-				System.out.println("Connected");
+				logger.info("Connected");
 			} catch (SQLException ex) {
 				ex.printStackTrace();
 			}
 		} catch (ClassNotFoundException e) {
-			System.out.println(e);
+			logger.debug(e);
 		}
 		return con;
 	}
@@ -34,6 +39,7 @@ public class ConnectionManager {
             try {
                 con.close();
             } catch (SQLException ex) {
+            	 logger.debug(ex);
                  ex.printStackTrace();
             }
         }

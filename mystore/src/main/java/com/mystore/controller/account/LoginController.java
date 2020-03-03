@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.log4j.Logger;
+
 import com.core.exception.BusinessException;
 import com.mystore.model.Account;
 import com.mystore.service.AccountService;
@@ -24,6 +26,9 @@ import com.mystore.service.AccountServiceImpl;
 public class LoginController extends HttpServlet {
 	
 	private static final long serialVersionUID = 1L;
+	
+	final static Logger logger = Logger.getLogger(LoginController.class);
+
 	
 	private static String ERROR = "/error.jsp";
 

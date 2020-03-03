@@ -73,7 +73,7 @@ public class ProductServiceTest {
 
 	                Object[] arguments = invocation.getArguments();
 	                if (arguments != null && arguments.length > 0 && arguments[0] != null){
-	                	System.out.println(arguments[0]);
+	                	logger.info(arguments[0]);
 	                	//int productId = (Integer) arguments[0];                	
 	                    return (Integer)arguments[0];
 	                }

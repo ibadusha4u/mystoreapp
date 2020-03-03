@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.fileupload.DiskFileUpload;
 import org.apache.commons.fileupload.FileItem;
+import org.apache.log4j.Logger;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -33,6 +34,8 @@ import com.ordermanagement.service.OrderServiceImpl;
 public class MultipartController extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
+	
+	final static Logger logger = Logger.getLogger(MultipartController.class);
 		
 	private static String ERROR = "/error.jsp";
 
@@ -60,7 +63,7 @@ public class MultipartController extends HttpServlet {
 				if (fi.isFormField()) {
 					String key = fi.getFieldName();
 					String val = fi.getString();
-					System.out.println("Form parameter " + key + "=" + val);
+					logger.info("Form parameter " + key + "=" + val);
 				} else {
 					if (fi.getSize() < 1) {
 						throw new Exception("No file was uplaoded");
@@ -71,9 +74,9 @@ public class MultipartController extends HttpServlet {
 			}
 
 			Workbook workbook = new XSSFWorkbook(uploadedFileStream);
-			System.out.println("Workbook has " + workbook.getNumberOfSheets() + " Sheets : ");
+			logger.info("Workbook has " + workbook.getNumberOfSheets() + " Sheets : ");
 			workbook.forEach(sheet -> {
-				System.out.println("=> " + sheet.getSheetName());
+				logger.info("=> " + sheet.getSheetName());
 			});
 			Sheet sheet = workbook.getSheetAt(0);
 			List<Order> orderList = new ArrayList<Order>();
@@ -98,7 +101,7 @@ public class MultipartController extends HttpServlet {
 			orderList.add(order);
 			orderService.add(orderList);
 
-			System.out.println("File " + fileName + " has uploaded successfully!");
+			logger.info("File " + fileName + " has uploaded successfully!");
 			request.setAttribute("message", "File " + fileName + " has uploaded successfully!");
 		
 			response.setContentType("text/html");

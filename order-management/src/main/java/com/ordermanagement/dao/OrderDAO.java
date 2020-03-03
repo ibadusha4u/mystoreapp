@@ -10,14 +10,17 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.log4j.Logger;
+
 import com.core.dao.AbstractDAO;
 import com.core.exception.BusinessException;
+import com.core.util.ConnectionManager;
 import com.ordermanagement.model.Order;
 import com.ordermanagement.model.OrderItem;
 
-import com.core.util.ConnectionManager;
-
 public class OrderDAO implements AbstractDAO<Order> {
+	
+	final static Logger logger = Logger.getLogger(OrderDAO.class);
 
 	private static Connection currentCon = null;
 	private static ResultSet rs = null;
@@ -78,7 +81,7 @@ public class OrderDAO implements AbstractDAO<Order> {
 			stmt = currentCon.createStatement();
 
 			String q1 = "select id, amount, created_date from `ORDER`";
-			System.out.println(q1);
+			logger.info(q1);
 			ResultSet rs1 = stmt.executeQuery(q1);
 
 			while (rs1.next()) {
@@ -139,7 +142,7 @@ public class OrderDAO implements AbstractDAO<Order> {
 				+ " SET ORDER_ITEM.sold_quantity = '" + orderItem.getSoldQuantity() + "', `ORDER`.amount='" + amount
 				+ "' WHERE ORDER_ITEM.order_id= " + orderItem.getOrderId() + "";
 
-		System.out.println("Query : " + searchQuery);
+		logger.info("Query : " + searchQuery);
 		try {
 			currentCon = ConnectionManager.getConnection();
 			stmt = currentCon.createStatement();
@@ -165,7 +168,7 @@ public class OrderDAO implements AbstractDAO<Order> {
 			currentCon = ConnectionManager.getConnection();
 			String query = "delete from ORDER_ITEM where order_id =?";
 			ps = currentCon.prepareStatement(query);
-			System.out.println(query);
+			logger.info(query);
 
 			ps.setInt(1, orderid);
 			ps.executeUpdate();
@@ -227,8 +230,8 @@ public class OrderDAO implements AbstractDAO<Order> {
 					throw new SQLException("Insertion failed, no ID obtained.");
 				}
 
-				System.out.println("Your product Sku is " + productSku);
-				System.out.println("Your order product quantity is " + soldQuantity);
+				logger.info("Your product Sku is " + productSku);
+				logger.info("Your order product quantity is " + soldQuantity);
 			} catch (Exception ex) {
 				ex.printStackTrace();
 				throw new BusinessException(ex.getMessage(), ex);

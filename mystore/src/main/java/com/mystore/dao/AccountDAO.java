@@ -7,6 +7,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
 
+import org.apache.log4j.Logger;
+
 import com.core.dao.AbstractDAO;
 import com.core.exception.BusinessException;
 import com.core.util.ConnectionManager;
@@ -14,6 +16,8 @@ import com.mystore.model.Account;
 
 public class AccountDAO implements AbstractDAO<Account> {
 
+	final static Logger logger = Logger.getLogger(AccountDAO.class);
+	
 	private static Connection currentCon = null;
 	private static ResultSet rs = null;
 	private static PreparedStatement ps = null;
@@ -35,7 +39,7 @@ public class AccountDAO implements AbstractDAO<Account> {
 			ps.setString(7, account.getRole());
 			ps.executeUpdate();
 
-			System.out.println("Your email is " + account.getEmail());
+			logger.info("Your email is " + account.getEmail());
 
 		} catch (Exception ex) {
 			ex.printStackTrace();
@@ -112,7 +116,7 @@ public class AccountDAO implements AbstractDAO<Account> {
 			currentCon = ConnectionManager.getConnection();
 			stmt = currentCon.createStatement();
 			stmt.executeUpdate(searchQuery);
-			System.out.println(searchQuery);
+			logger.info(searchQuery);
 
 		} catch (SQLException ex) {
 			ex.printStackTrace();
@@ -177,9 +181,9 @@ public class AccountDAO implements AbstractDAO<Account> {
 			 */
 			String searchQuery = "select * from account where email='" + email + "' AND password='" + password + "'";
 
-			System.out.println("Your email is " + email);
-			System.out.println("Your password is " + password);
-			System.out.println("Query: " + searchQuery);
+			logger.info("Your email is " + email);
+			logger.info("Your password is " + password);
+			logger.info("Query: " + searchQuery);
 
 			currentCon = ConnectionManager.getConnection();
 			stmt = currentCon.createStatement();
@@ -189,13 +193,13 @@ public class AccountDAO implements AbstractDAO<Account> {
 			// if user exists set the isValid variable to true
 			if (more) {
 				email = rs.getString("email");
-				System.out.println("Welcome " + email);
+				logger.info("Welcome " + email);
 				bean.setEmail(email);
 				bean.setValid(true);
 			}
 			// if user does not exist set the isValid variable to false
 			else if (!more) {
-				System.out.println("Sorry, you are not a registered user! Please sign up first");
+				logger.info("Sorry, you are not a registered user! Please sign up first");
 				bean.setValid(false);
 			}
 		} catch (Exception ex) {
@@ -315,7 +319,7 @@ public class AccountDAO implements AbstractDAO<Account> {
 				bean.setEmail(email);
 				bean.setValid(true);
 			} else if (!more) {
-				System.out.println("Sorry");
+				logger.info("Sorry");
 				bean.setValid(false);
 			}
 		} catch (Exception ex) {

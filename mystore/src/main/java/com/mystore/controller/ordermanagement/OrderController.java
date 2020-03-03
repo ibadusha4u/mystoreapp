@@ -12,6 +12,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.log4j.Logger;
+
 import com.core.exception.BusinessException;
 import com.inventory.model.Product;
 import com.inventory.service.ProductService;
@@ -28,6 +30,8 @@ import com.ordermanagement.service.OrderServiceImpl;
 public class OrderController extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
+	
+	final static Logger logger = Logger.getLogger(OrderController.class);
 	
 	private static String CREATE = "/order/addOrder.jsp";
 	private static String UPDATE = "/order/updateOrder.jsp";
@@ -66,7 +70,7 @@ public class OrderController extends HttpServlet {
 				int orderid = Integer.parseInt(request.getParameter("orderid"));
 				Order order = orderService.getOrderById(orderid);
 				List<Product> product = productService.getAllProduct();
-				System.out.println(order.getOrderItem().get(0).getProductSku());
+				logger.info(order.getOrderItem().get(0).getProductSku());
 				request.setAttribute("order", order.getOrderItem().get(0));
 				request.setAttribute("products", product);
 				RequestDispatcher view = request.getRequestDispatcher(forward);
@@ -74,7 +78,7 @@ public class OrderController extends HttpServlet {
 				
 			} else if (action.equalsIgnoreCase("deleteOrder")) {
 				int orderid = Integer.parseInt(request.getParameter("orderid"));				
-				System.out.println("orderid : " + orderid);
+				logger.info("orderid : " + orderid);
 				orderService.deleteOrder(orderid);
 				response.setContentType("text/html");
 				PrintWriter pw = response.getWriter();
