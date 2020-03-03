@@ -2,22 +2,22 @@ package com.ordermanagement.service;
 
 import java.util.List;
 
+import com.core.dao.AbstractDAO;
 import com.core.exception.BusinessException;
 import com.ordermanagement.dao.OrderDAO;
 import com.ordermanagement.model.Order;
 
 public class OrderServiceImpl implements OrderService{
 	
-	private OrderDAO orderDAO;
+	private AbstractDAO<Order> orderDAO;
 
-	public OrderServiceImpl() {
-		super();
+	public OrderServiceImpl() {		
 		orderDAO = new OrderDAO();		
 	}
 
 	@Override
 	public void add(List<Order> orderLst) throws BusinessException{
-		orderDAO.add(orderLst);		
+		((OrderDAO)orderDAO).add(orderLst);		
 	}
 
 	@Override

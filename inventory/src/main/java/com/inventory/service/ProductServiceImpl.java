@@ -2,16 +2,16 @@ package com.inventory.service;
 
 import java.util.List;
 
+import com.core.dao.AbstractDAO;
 import com.core.exception.BusinessException;
 import com.inventory.dao.ProductDAO;
 import com.inventory.model.Product;
 
 public class ProductServiceImpl implements ProductService{
 	
-	private ProductDAO productDAO;
+	private AbstractDAO<Product> productDAO;
         
-    public ProductServiceImpl() {
-            super();
+    public ProductServiceImpl() {            
             productDAO = new ProductDAO();
       }
     
@@ -30,7 +30,7 @@ public class ProductServiceImpl implements ProductService{
 
 	public void updateQuantity(Product product) throws BusinessException {
 		try {
-			productDAO.updateQuantity(product);
+			((ProductDAO) productDAO).updateQuantity(product);
 		} catch (Exception e) {			
 			e.printStackTrace();
 			throw new BusinessException(e.getMessage(), e);
